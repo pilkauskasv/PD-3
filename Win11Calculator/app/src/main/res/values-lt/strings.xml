@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Skaičiuotuvas</string>
+    <string name="mode_standard">Standartinis</string>
+
+    <!-- Number formatting -->
+    <string name="decimal_separator">,</string>
+    <string name="grouping_separator">\u00A0</string>
+
+    <!-- Error messages -->
+    <string name="error_divide_by_zero">Dalyba iš nulio negalima</string>
+    <string name="error_invalid_input">Neteisinga įvestis</string>
+    <string name="error_overflow">Perpildymas</string>
+
+    <!-- History panel -->
+    <string name="history_empty">Istorijos dar nėra.</string>
+    <string name="cd_history">Istorija</string>
+    <string name="cd_clear_history">Išvalyti visą istoriją</string>
+
+    <!-- Memory row labels -->
+    <string name="mem_mc">MC</string>
+    <string name="mem_mr">MR</string>
+    <string name="mem_m_plus">M+</string>
+    <string name="mem_m_minus">M−</string>
+    <string name="mem_ms">MS</string>
+    <string name="mem_m_dropdown">M∨</string>
+
+    <!-- Memory accessibility descriptions -->
+    <string name="cd_mem_mc">Išvalyti atmintį</string>
+    <string name="cd_mem_mr">Atkurti iš atminties</string>
+    <string name="cd_mem_m_plus">Pridėti prie atminties</string>
+    <string name="cd_mem_m_minus">Atimti iš atminties</string>
+    <string name="cd_mem_ms">Įrašyti į atmintį</string>
+    <string name="cd_mem_m_dropdown">Atminties sąrašas</string>
+
+    <!-- Keypad labels -->
+    <string name="key_percent">%</string>
+    <string name="key_ce">CE</string>
+    <string name="key_c">C</string>
+    <string name="key_reciprocal">1/x</string>
+    <string name="key_square">x²</string>
+    <string name="key_sqrt">²√x</string>
+    <string name="key_divide">÷</string>
+    <string name="key_multiply">×</string>
+    <string name="key_subtract">−</string>
+    <string name="key_add">+</string>
+    <string name="key_negate">+/−</string>
+    <string name="key_equals">=</string>
+    <string name="key_0">0</string>
+    <string name="key_1">1</string>
+    <string name="key_2">2</string>
+    <string name="key_3">3</string>
+    <string name="key_4">4</string>
+    <string name="key_5">5</string>
+    <string name="key_6">6</string>
+    <string name="key_7">7</string>
+    <string name="key_8">8</string>
+    <string name="key_9">9</string>
+
+    <!-- Keypad accessibility descriptions -->
+    <string name="cd_percent">Procentas</string>
+    <string name="cd_ce">Išvalyti įvestį</string>
+    <string name="cd_c">Išvalyti viską</string>
+    <string name="cd_backspace">Naikinti paskutinį simbolį</string>
+    <string name="cd_reciprocal">Atvirkštinis skaičius</string>
+    <string name="cd_square">Pakelti kvadratu</string>
+    <string name="cd_sqrt">Kvadratinė šaknis</string>
+    <string name="cd_divide">Dalinti</string>
+    <string name="cd_multiply">Dauginti</string>
+    <string name="cd_subtract">Atimti</string>
+    <string name="cd_add">Pridėti</string>
+    <string name="cd_negate">Pakeisti ženklą</string>
+    <string name="cd_decimal">Dešimtainis skirtukas</string>
+    <string name="cd_equals">Lygu</string>
+</resources>
