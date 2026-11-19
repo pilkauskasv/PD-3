@@ -382,7 +382,11 @@ export default function App() {
                 <div className={`text-[14px] min-h-[20px] truncate ${textSecondary}`}>
                   {state.expressionText || '\u00A0'}
                 </div>
-                <div className={`font-semibold tabular-nums leading-tight truncate ${displaySizeClass}`}>
+                <div
+                  className={`font-semibold tabular-nums leading-tight ${
+                    isInError ? 'text-[18px] break-words' : `truncate ${displaySizeClass}`
+                  }`}
+                >
                   {displayValue}
                 </div>
               </div>
@@ -407,7 +411,11 @@ export default function App() {
               <div className={`text-[15px] min-h-[22px] truncate ${textSecondary}`}>
                 {state.expressionText || '\u00A0'}
               </div>
-              <div className={`font-semibold tabular-nums leading-tight truncate ${displaySizeClass}`}>
+              <div
+                className={`font-semibold tabular-nums leading-tight ${
+                  isInError ? 'text-[22px] break-words' : `truncate ${displaySizeClass}`
+                }`}
+              >
                 {displayValue}
               </div>
             </div>
@@ -418,14 +426,14 @@ export default function App() {
 
         {/* History Overlay Sheet */}
         {state.isHistoryVisible && (
-          <div className="absolute inset-0 z-20 flex flex-col justify-end">
+          <div className={`absolute inset-0 z-20 flex flex-col justify-end ${landscape ? 'items-end' : ''}`}>
             <div
               onClick={() => dispatch({ type: 'CLOSE_HISTORY' })}
               className={`absolute inset-0 ${dark ? 'bg-black/45' : 'bg-black/25'}`}
             />
             <div
               className={`relative z-10 flex flex-col rounded-t-xl shadow-xl ${
-                landscape ? 'h-[85%]' : 'h-[66%]'
+                landscape ? 'h-[85%] w-[420px] max-w-full' : 'h-[66%] w-full'
               } ${dark ? 'bg-[#2C2C2C] text-white' : 'bg-[#F9F9F9] text-[#1A1A1A]'}`}
             >
               <div className="flex-1 overflow-y-auto px-3 py-3 space-y-1">

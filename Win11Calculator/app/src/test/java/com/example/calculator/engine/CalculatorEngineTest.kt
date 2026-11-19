@@ -314,4 +314,30 @@ class CalculatorEngineTest {
         press(CalculatorAction.ClearHistory)
         assertTrue(state.history.isEmpty())
     }
+
+    @Test
+    fun `21 negating right operand after operator chains accurately`() {
+        enterDigits("12")
+        press(
+            CalculatorAction.Operator(BinaryOperator.ADD),
+            CalculatorAction.Negate,
+            CalculatorAction.Operator(BinaryOperator.MULTIPLY)
+        )
+        assertEquals("0", display())
+
+        enterDigits("5")
+        press(CalculatorAction.Equals)
+        assertEquals("0", display())
+    }
+
+    @Test
+    fun `22 square root preserves precision for very small numbers below 1e-24`() {
+        // 1e-24 squared = 1e-48; sqrt(1e-48) must equal 1e-24 and not round down to 0
+        enterDigits("0.000000000001")
+        press(CalculatorAction.Square) // 1e-24
+        press(CalculatorAction.Square) // 1e-48
+        press(CalculatorAction.SquareRoot)
+
+        assertEquals("1e-24", display())
+    }
 }

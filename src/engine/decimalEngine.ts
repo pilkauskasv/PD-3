@@ -458,10 +458,13 @@ export function reduceCalculator(
       }
       const neg = normalize({ coeff: -cur.coeff, scale: cur.scale });
       const newBuf = toPlainString(neg);
-      const newUnary =
-        state.unaryExpressionOperand || state.isResultDisplayed
-          ? `negate( ${state.unaryExpressionOperand ?? formatForExpression(cur, symbols)} )`
-          : null;
+      const shouldWrap =
+        Boolean(state.unaryExpressionOperand) ||
+        state.isResultDisplayed ||
+        state.pendingOperator !== null;
+      const newUnary = shouldWrap
+        ? `negate( ${state.unaryExpressionOperand ?? formatForExpression(cur, symbols)} )`
+        : null;
       let newExpr = state.expressionText;
       if (state.pendingOperator && state.leftExpressionText && newUnary) {
         newExpr = `${state.leftExpressionText} ${OPERATOR_SYMBOLS[state.pendingOperator]} ${newUnary}`;
@@ -471,6 +474,7 @@ export function reduceCalculator(
       return {
         ...state,
         inputBuffer: newBuf,
+        isResultDisplayed: state.isResultDisplayed || state.pendingOperator !== null,
         unaryExpressionOperand: newUnary,
         expressionText: newExpr,
       };

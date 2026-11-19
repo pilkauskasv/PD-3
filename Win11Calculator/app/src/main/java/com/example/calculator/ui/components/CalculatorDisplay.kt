@@ -69,7 +69,8 @@ fun CalculatorDisplay(
         AutoSizingDisplayText(
             text = primaryText,
             maxFontSize = 48.sp,
-            minFontSize = 22.sp,
+            minFontSize = if (error != null) 16.sp else 20.sp,
+            allowWrap = error != null,
             color = colors.primaryText
         )
     }
@@ -80,6 +81,7 @@ private fun AutoSizingDisplayText(
     text: String,
     maxFontSize: TextUnit,
     minFontSize: TextUnit,
+    allowWrap: Boolean,
     color: androidx.compose.ui.graphics.Color
 ) {
     val textMeasurer = rememberTextMeasurer()
@@ -94,22 +96,23 @@ private fun AutoSizingDisplayText(
         contentAlignment = Alignment.CenterEnd
     ) {
         val maxWidthPx = with(LocalDensity.current) { maxWidth.toPx() }.toInt().coerceAtLeast(1)
-        var chosenSize = maxFontSize
-        var candidateSp = maxFontSize.value
-
-        while (candidateSp >= minFontSize.value) {
-            val result = textMeasurer.measure(
-                text = text,
-                style = baseStyle.copy(fontSize = candidateSp.sp),
-                maxLines = 1,
-                softWrap = false
-            )
-            if (result.size.width <= maxWidthPx) {
-                chosenSize = candidateSp.sp
-                break
+        val chosenSize = androidx.compose.runtime.remember(text, maxWidthPx, maxFontSize, minFontSize) {
+            var resolved = minFontSize
+            var candidateSp = maxFontSize.value
+            while (candidateSp >= minFontSize.value) {
+                val result = textMeasurer.measure(
+                    text = text,
+                    style = baseStyle.copy(fontSize = candidateSp.sp),
+                    maxLines = 1,
+                    softWrap = false
+                )
+                if (result.size.width <= maxWidthPx) {
+                    resolved = candidateSp.sp
+                    break
+                }
+                candidateSp -= 2f
             }
-            candidateSp -= 2f
-            chosenSize = candidateSp.coerceAtLeast(minFontSize.value).sp
+            resolved
         }
 
         Text(
@@ -119,8 +122,8 @@ private fun AutoSizingDisplayText(
                 lineHeight = (chosenSize.value * 1.15f).sp
             ),
             color = color,
-            maxLines = 1,
-            softWrap = false,
+            maxLines = if (allowWrap) 2 else 1,
+            softWrap = allowWrap,
             textAlign = TextAlign.End
         )
     }

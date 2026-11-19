@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -48,6 +49,7 @@ fun HistorySheet(
     visible: Boolean,
     history: List<HistoryEntry>,
     sheetHeightFraction: Float,
+    isLandscape: Boolean,
     onDismiss: () -> Unit,
     onSelectEntry: (HistoryEntry) -> Unit,
     onClearHistory: () -> Unit,
@@ -77,14 +79,20 @@ fun HistorySheet(
             visible = visible,
             enter = slideInVertically(initialOffsetY = { it }) + fadeIn(),
             exit = slideOutVertically(targetOffsetY = { it }) + fadeOut(),
-            modifier = Modifier.align(Alignment.BottomCenter)
+            modifier = Modifier.align(if (isLandscape) Alignment.BottomEnd else Alignment.BottomCenter)
         ) {
             Surface(
                 shape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp),
                 color = colors.historySheetBackground,
                 shadowElevation = 8.dp,
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .then(
+                        if (isLandscape) {
+                            Modifier.widthIn(max = 420.dp).fillMaxWidth()
+                        } else {
+                            Modifier.fillMaxWidth()
+                        }
+                    )
                     .fillMaxHeight(sheetHeightFraction)
                     .clickable(
                         interactionSource = remember { MutableInteractionSource() },

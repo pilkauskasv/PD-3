@@ -78,6 +78,7 @@ fun CalculatorScreen(
             visible = uiState.isHistoryVisible,
             history = uiState.history,
             sheetHeightFraction = if (isLandscape) 0.85f else 0.66f,
+            isLandscape = isLandscape,
             onDismiss = { viewModel.onAction(CalculatorAction.CloseHistory) },
             onSelectEntry = { entry -> viewModel.onAction(CalculatorAction.RecallHistory(entry)) },
             onClearHistory = { viewModel.onAction(CalculatorAction.ClearHistory) }

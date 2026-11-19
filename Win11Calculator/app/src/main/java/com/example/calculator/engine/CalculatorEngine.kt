@@ -6,7 +6,6 @@ import com.example.calculator.model.CalculatorError
 import com.example.calculator.model.CalculatorState
 import com.example.calculator.model.HistoryEntry
 import java.math.BigDecimal
-import java.math.RoundingMode
 
 class CalculatorEngine {
 
@@ -180,7 +179,11 @@ class CalculatorEngine {
 
         val negated = NumberFormatter.normalize(current.negate())
         val newBuffer = NumberFormatter.toCanonicalString(negated)
-        val newUnaryExpr = if (state.unaryExpressionOperand != null || state.isResultDisplayed) {
+        val shouldWrapUnary =
+            state.unaryExpressionOperand != null ||
+                state.isResultDisplayed ||
+                state.pendingOperator != null
+        val newUnaryExpr = if (shouldWrapUnary) {
             val inner = state.unaryExpressionOperand ?: NumberFormatter.formatForExpression(current, symbols)
             "negate( $inner )"
         } else {
@@ -195,6 +198,7 @@ class CalculatorEngine {
 
         return state.copy(
             inputBuffer = newBuffer,
+            isResultDisplayed = state.isResultDisplayed || state.pendingOperator != null,
             unaryExpressionOperand = newUnaryExpr,
             expressionText = newExpression
         )
@@ -645,7 +649,7 @@ class CalculatorEngine {
                 break
             }
         }
-        return estimate.setScale(mc.precision, RoundingMode.HALF_UP).round(mc)
+        return estimate.round(mc)
     }
 
     private fun parseBuffer(buffer: String): BigDecimal {
